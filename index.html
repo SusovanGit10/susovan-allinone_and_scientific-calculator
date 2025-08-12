@@ -11,7 +11,7 @@
   <div class="calculator" id="calcRoot">
     <input type="text" id="secondaryDisplay" readonly />
     <input type="text" id="display" readonly />
-    
+    <!-- Row 1 -->
     <div class="button-row">
       <button class="blue" onclick="appendValue('asin(')">asin</button>
       <button class="blue" onclick="appendValue('acos(')">acos</button>
@@ -19,7 +19,7 @@
       <button class="lightgray" onclick="appendValue('!')">!</button>
       <button class="blue" onclick="openMenu()">Menu</button>
     </div>
-    
+    <!-- Row 2 -->
     <div class="button-row">
       <button class="blue" onclick="appendValue('sin(')">sin</button>
       <button class="blue" onclick="appendValue('cos(')">cos</button>
@@ -29,7 +29,7 @@
       <button class="blue" onclick="appendValue('Ans')">Ans</button>
       <button class="blue" onclick="openExtras()">Extras</button>
     </div>
-    
+    <!-- Row 3 -->
     <div class="button-row">
       <button class="blue" onclick="appendValue('Math.PI')">π</button>
       <button class="blue" onclick="appendValue('**')">yˣ</button>
@@ -39,7 +39,7 @@
       <button class="darkgray" onclick="appendToActive('8')">8</button>
       <button class="darkgray" onclick="appendToActive('9')">9</button>
     </div>
-     
+    <!-- Row 4 -->
     <div class="button-row">
       <button class="blue" onclick="appendValue('Math.pow(')">x²</button>
       <button class="blue" onclick="appendValue('Math.sqrt(')">√x</button>
@@ -49,7 +49,7 @@
       <button class="darkgray" onclick="appendToActive('5')">5</button>
       <button class="darkgray" onclick="appendToActive('6')">6</button>
     </div>
-    
+    <!-- Row 5 -->
     <div class="button-row">
       <button class="blue" onclick="appendValue('Math.exp(')">eˣ</button>
       <button class="blue" onclick="appendValue('Math.log(')">LN</button>
@@ -59,7 +59,7 @@
       <button class="darkgray" onclick="appendToActive('2')">2</button>
       <button class="darkgray" onclick="appendToActive('3')">3</button>
     </div>
-    
+    <!-- Row 6 -->
     <div class="button-row">
       <button class="blue" onclick="appendValue('Math.log10(')">LOG</button>
       <button class="blue" onclick="appendValue('1/(')">1/x</button>
@@ -71,9 +71,9 @@
     </div>
     <button id="equals-btn" onclick="calculateResult()">=</button>
   </div>
-  
+  <!-- Overlay -->
   <div id="overlay" class="overlay" onclick="closeMenu(); closeExtras()"></div>
-  
+  <!-- MENU MODAL -->
   <div id="menuModal" class="menu-modal" role="dialog" aria-modal="true">
     <h3>Settings</h3>
     <div class="menu-section">
@@ -116,7 +116,7 @@
     </div>
     <button class="menu-btn" onclick="applyMenu()">DONE</button>
   </div>
-  
+  <!-- EXTRAS MODAL -->
   <div id="extrasModal" class="extras-modal" role="dialog" aria-modal="true">
     <h3>Extras</h3>
     <div class="tab-buttons">
@@ -211,7 +211,7 @@
     <button class="clear-btn" onclick="clearExtras()">Back</button>
   </div>
   <footer style="margin-top:18px">
-    Copyright ©2025 : Designed & Developed by Susovan Hati
+    Copyright ©2025: Designed & Developed by Susovan
   </footer>
   <div id="history" style="max-width:360px;margin:0 auto;color:white;text-align:right;font-size:0.9rem;line-height:1.4em;padding:8px;background:rgba(0,0,0,0.3);border-radius:8px;">
     <strong>History</strong><br>
@@ -219,4 +219,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
