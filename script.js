@@ -338,7 +338,7 @@ function toggleDF() {
 document.addEventListener('keydown', (e) => {
   const active = document.activeElement;
   if (active && active.tagName === 'INPUT' && !active.readOnly && (active.type === 'text' || active.type === 'number')) {
-    return; // let browser handle input
+    return; 
   }
   if (e.key >= '0' && e.key <= '9') {
     appendNumber(e.key);
@@ -375,11 +375,11 @@ document.addEventListener('keydown', (e) => {
 function init() {
   document.getElementById('decimals').value = 2;
   updateHistory();
-  updateUnitOptions(); // Initialize unit options
+  updateUnitOptions(); 
 }
 document.addEventListener('DOMContentLoaded', init);
 
-// Extras Modal Functions
+
 function openExtras() {
   document.getElementById('extrasModal').style.display = 'block';
   document.getElementById('overlay').style.display = 'block';
@@ -432,45 +432,45 @@ function convertToFraction() {
   document.getElementById('fracOutput').value = `${h1}/${k1}`;
 }
 const unitConversions = {
-  // Length conversions (base unit: meter)
+  
   angstrom: 1e-10, mm: 0.001, cm: 0.01, in: 0.0254, ft: 0.3048,
   yd: 0.9144, m: 1, km: 1000, mi: 1609.34, nmi: 1852,
   AU: 1.496e11, ly: 9.461e15,
-  // Temperature conversions (base unit: Kelvin)
-  C: 1, F: 5/9, K: 1, R: 5/9, // Conversion factors are handled in function
-  // Energy conversions (base unit: Joule)
+   
+  C: 1, F: 5/9, K: 1, R: 5/9,  
+  
   eV: 1.60218e-19, erg: 1e-7, J: 1, ftlb: 1.35582, cal: 4.184,
   kcal: 4184, Btu: 1055.06, kWh: 3.6e6, therm: 1.05506e8,
-  // Light conversions (base unit: Lux)
+  
   lx: 1, lmperm2: 1, fc: 10.7639, lmperft2: 10.7639, lmperin2: 1550.003,
-  lmpercm2: 10000, ph: 10000, wpercm2: 683 * 10000, // Approximate conversion
-  // Mass conversions (base unit: Kilogram)
+  lmpercm2: 10000, ph: 10000, wpercm2: 683 * 10000, 
+  
   ug: 1e-9, mg: 1e-6, gr: 6.47989e-5, ct: 0.0002, g: 0.001,
   oz: 0.0283495, kg: 1, lb: 0.453592, slug: 14.5939,
   ton: 907.185, tonne: 1000, tonUK: 1016.05,
-  // Force conversions (base unit: Newton)
+
   dyn: 1e-5, gf: 0.00980665, pdl: 0.138255, N: 1,
   lbf: 4.44822, kgf: 9.80665, kp: 9.80665, kN: 1000,
   kip: 4448.22, tonf: 8896.44,
-  // Time conversions (base unit: Second)
+  
   fs: 1e-15, ps: 1e-12, ns: 1e-9, us: 1e-6, ms: 0.001,
   s: 1, min: 60, h: 3600, d: 86400, week: 604800,
   mo: 2.628e6, yr: 3.154e7,
-  // Speed conversions (base unit: Meters per Second)
+
   inps: 0.0254, kmph: 0.277778, ftps: 0.3048, mph: 0.44704,
   kn: 0.514444, mps: 1, mach: 343, kmps: 1000, c: 299792458,
-  // Area conversions (base unit: Square Meter)
+
   mm2: 1e-6, cm2: 1e-4, in2: 0.00064516, ft2: 0.092903,
   yd2: 0.836127, m2: 1, ac: 4046.86, ha: 10000,
   mi2: 2.58999e6, km2: 1e6,
-  // Power conversions (base unit: Watt)
+
   mW: 0.001, W: 1, hp: 745.7, kW: 1000, MW: 1e6,
-  // Volume conversions (base unit: Cubic Meter)
+
   ml: 0.000001, tsp: 0.00000492892, tbsp: 0.0000147868,
   floz: 0.0000295735, c: 0.000236588, pt: 0.000473176,
   qt: 0.000946353, l: 0.001, gal: 0.00378541,
   galUK: 0.00454609, ft3: 0.0283168, m3: 1,
-  // Pressure conversions (base unit: Pascal)
+
   Pa: 1, mmHg: 133.322, torr: 133.322, inH2O: 248.843, kPa: 1000,
   inHg: 3386.39, psi: 6894.76, bar: 100000, atm: 101325
 };
@@ -480,11 +480,11 @@ function updateUnitOptions() {
   const fromSelect = document.getElementById('unitFrom');
   const toSelect = document.getElementById('unitTo');
 
-  // Clear existing options
+
   fromSelect.innerHTML = '';
   toSelect.innerHTML = '';
 
-  // Define units for each category
+  
   const unitMap = {
     length: [
       {value: 'angstrom', text: 'Angstrom (å)'},
@@ -624,7 +624,7 @@ function updateUnitOptions() {
     ]
   };
 
-  // Populate dropdowns
+  
   const units = unitMap[category] || unitMap['length'];
   units.forEach(unit => {
     let optFrom = document.createElement('option');
@@ -637,7 +637,7 @@ function updateUnitOptions() {
     toSelect.appendChild(optTo);
   });
 
-  // Set default values
+  
   fromSelect.value = units[0].value;
   toSelect.value = units[0].value;
   convertUnit();
@@ -652,32 +652,32 @@ function convertUnit() {
 }
 
 function convertUnits(value, fromUnit, toUnit) {
-  // Handle temperature conversions separately
+
   if (['C', 'F', 'K', 'R'].includes(fromUnit) && ['C', 'F', 'K', 'R'].includes(toUnit)) {
     let baseValue = convertToBaseTemperature(value, fromUnit);
     return convertFromBaseTemperature(baseValue, toUnit);
   }
-  // Convert to base unit
+  
   let baseValue = value * unitConversions[fromUnit];
-  // Convert from base unit
+  
   return baseValue / unitConversions[toUnit];
 }
 
 function convertToBaseTemperature(value, unit) {
   switch (unit) {
-    case 'C': return value + 273.15; // Celsius to Kelvin
-    case 'F': return (value + 459.67) * 5 / 9; // Fahrenheit to Rankine, then to Kelvin
-    case 'K': return value; // Kelvin is base
-    case 'R': return value * 5 / 9; // Rankine to Kelvin
+    case 'C': return value + 273.15; 
+    case 'F': return (value + 459.67) * 5 / 9; 
+    case 'K': return value; 
+    case 'R': return value * 5 / 9; 
   }
 }
 
 function convertFromBaseTemperature(value, unit) {
   switch (unit) {
-    case 'C': return value - 273.15; // Kelvin to Celsius
-    case 'F': return value * 9 / 5 - 459.67; // Kelvin to Rankine, then to Fahrenheit
-    case 'K': return value; // Kelvin is base
-    case 'R': return value * 9 / 5; // Kelvin to Rankine
+    case 'C': return value - 273.15; 
+    case 'F': return value * 9 / 5 - 459.67; 
+    case 'K': return value; 
+    case 'R': return value * 9 / 5; 
   }
 }
 
@@ -685,7 +685,7 @@ function showInfo() {
   alert("Susovan's All In One Calculator");
 }
 
-// Solver Functions
+
 function loadSolver(type, degree) {
   let html = '';
   if (type === 'linear') {
@@ -818,14 +818,14 @@ function solvePoly(degree) {
     roots = durandKerner(coeffs);
   }
   let result = 'Roots:<br>';
-  roots.sort((a, b) => b.r - a.r); // sort by real part descending
+  roots.sort((a, b) => b.r - a.r); 
   roots.forEach(root => {
     result += complex.toStr(root) + '<br>';
   });
   resultDiv.innerHTML = result;
 }
 
-// Complex arithmetic helpers
+
 const complex = {
   add: (a, b) => ({r: a.r + b.r, i: a.i + b.i}),
   sub: (a, b) => ({r: a.r - b.r, i: a.i - b.i}),
@@ -849,7 +849,7 @@ const complex = {
   }
 };
 
-// Polynomial evaluation for complex x
+
 function polyEval(coeffs, x) {
   let out = {r: coeffs[0], i: 0};
   for (let k = 1; k < coeffs.length; k++) {
@@ -858,7 +858,7 @@ function polyEval(coeffs, x) {
   return out;
 }
 
-// Durand-Kerner for higher degrees
+
 function durandKerner(coeffs) {
   let degree = coeffs.length - 1;
   if (coeffs[0] === 0) return [];
@@ -892,16 +892,16 @@ function durandKerner(coeffs) {
   return roots;
 }
 
-// Cubic solver returning all roots as {r, i}
+
 function solveCubic(a, b, c, d) {
   function cuberoot(x) {
     let y = Math.pow(Math.abs(x), 1/3);
     return x < 0 ? -y : y;
   }
   let roots = [];
-  if (Math.abs(a) < 1e-8) { // Quadratic
+  if (Math.abs(a) < 1e-8) { 
     a = b; b = c; c = d;
-    if (Math.abs(a) < 1e-8) { // Linear
+    if (Math.abs(a) < 1e-8) { 
       a = b; b = c;
       if (Math.abs(a) < 1e-8) return [];
       roots.push({r: -b/a, i: 0});
@@ -963,7 +963,7 @@ function solveCubic(a, b, c, d) {
   return roots;
 }
 
-// Quartic solver
+
 function solveQuartic(aq, bq, cq, dq, eq) {
   let f2 = cq - (3 * bq * bq / 8);
   let g2 = dq + (bq * bq * bq / 8) - (bq * cq / 2);
@@ -1017,4 +1017,5 @@ function solveQuartic(aq, bq, cq, dq, eq) {
     roots.push({r: real, i: -imag});
   }
   return roots;
+
 }
