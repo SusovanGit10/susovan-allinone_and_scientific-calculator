@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Susovan's All In One Calculator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <img src="susovan.jpg" alt="Owner" class="owner-photo" />
+  <h1 class="owner-name">SUSOVAN'S All IN ONE CALCULATOR</h1>
+  <div class="calculator" id="calcRoot">
+    <input type="text" id="secondaryDisplay" readonly />
+    <input type="text" id="display" readonly />
+    
+    <div class="button-row">
+      <button class="blue" onclick="appendValue('asin(')">asin</button>
+      <button class="blue" onclick="appendValue('acos(')">acos</button>
+      <button class="blue" onclick="appendValue('atan(')">atan</button>
+      <button class="lightgray" onclick="appendValue('!')">!</button>
+      <button class="blue" onclick="openMenu()">Menu</button>
+    </div>
+    
+    <div class="button-row">
+      <button class="blue" onclick="appendValue('sin(')">sin</button>
+      <button class="blue" onclick="appendValue('cos(')">cos</button>
+      <button class="blue" onclick="appendValue('tan(')">tan</button>
+      <button class="lightgray" onclick="appendValue('(')">(</button>
+      <button class="lightgray" onclick="appendValue(')')">)</button>
+      <button class="blue" onclick="appendValue('Ans')">Ans</button>
+      <button class="blue" onclick="openExtras()">Extras</button>
+    </div>
+    
+    <div class="button-row">
+      <button class="blue" onclick="appendValue('Math.PI')">π</button>
+      <button class="blue" onclick="appendValue('**')">yˣ</button>
+      <button class="lightgray" onclick="appendValue(' / ')">÷</button>
+      <button class="lightgray" onclick="toggleSign()">(−)</button>
+      <button class="darkgray" onclick="appendToActive('7')">7</button>
+      <button class="darkgray" onclick="appendToActive('8')">8</button>
+      <button class="darkgray" onclick="appendToActive('9')">9</button>
+    </div>
+     
+    <div class="button-row">
+      <button class="blue" onclick="appendValue('Math.pow(')">x²</button>
+      <button class="blue" onclick="appendValue('Math.sqrt(')">√x</button>
+      <button class="lightgray" onclick="appendValue(' * ')">x</button>
+      <button class="red" onclick="clearAll()">CA</button>
+      <button class="darkgray" onclick="appendToActive('4')">4</button>
+      <button class="darkgray" onclick="appendToActive('5')">5</button>
+      <button class="darkgray" onclick="appendToActive('6')">6</button>
+    </div>
+    
+    <div class="button-row">
+      <button class="blue" onclick="appendValue('Math.exp(')">eˣ</button>
+      <button class="blue" onclick="appendValue('Math.log(')">LN</button>
+      <button class="lightgray" onclick="appendValue(' - ')">−</button>
+      <button class="red" onclick="clearDisplay()">C</button>
+      <button class="darkgray" onclick="appendToActive('1')">1</button>
+      <button class="darkgray" onclick="appendToActive('2')">2</button>
+      <button class="darkgray" onclick="appendToActive('3')">3</button>
+    </div>
+    
+    <div class="button-row">
+      <button class="blue" onclick="appendValue('Math.log10(')">LOG</button>
+      <button class="blue" onclick="appendValue('1/(')">1/x</button>
+      <button class="lightgray" onclick="appendValue(' + ')">+</button>
+      <button class="red" onclick="backspace()">←</button>
+      <button class="darkgray" onclick="appendToActive('0')">0</button>
+      <button class="darkgray" onclick="appendToActive('.')">·</button>
+      <button class="lightgray" onclick="appendValue('E')">EE</button>
+    </div>
+    <button id="equals-btn" onclick="calculateResult()">=</button>
+  </div>
+  
+  <div id="overlay" class="overlay" onclick="closeMenu(); closeExtras()"></div>
+  
+  <div id="menuModal" class="menu-modal" role="dialog" aria-modal="true">
+    <h3>Settings</h3>
+    <div class="menu-section">
+      <strong>Format:</strong><br>
+      <label><input type="radio" name="format" value="STD" checked> STD</label>
+      <label><input type="radio" name="format" value="FIX"> FIX</label>
+      <label><input type="radio" name="format" value="SCI"> SCI</label>
+      <label><input type="radio" name="format" value="ENG"> ENG</label>
+      <label style="margin-left:8px">Dec: <input type="number" id="decimals" min="0" max="12" value="2" style="width:50px"></label>
+    </div>
+    <div class="menu-section">
+      <strong>Angle:</strong><br>
+      <label><input type="radio" name="angle" value="DEG"> DEG</label>
+      <label><input type="radio" name="angle" value="RAD" checked> RAD</label>
+      <label><input type="radio" name="angle" value="GRAD"> GRAD</label>
+    </div>
+    <div class="menu-section">
+      <strong>Coord:</strong><br>
+      <label><input type="radio" name="coord" value="REC" checked> REC</label>
+      <label><input type="radio" name="coord" value="POLAR"> POLAR</label>
+      <div style="font-size:12px;color:#444;margin-top:6px">
+        Use <code>x,y</code> for rectangular and <code>r,θ</code> for polar. θ follows Angle mode.
+      </div>
+    </div>
+    <div class="menu-section">
+      <strong>Mode:</strong><br>
+      <label><input type="radio" name="mode" value="ALGEBRAIC" checked> ALGEBRAIC</label>
+      <label><input type="radio" name="mode" value="RPN"> RPN</label>
+      <div style="font-size:12px;color:#444;margin-top:6px">
+        In RPN mode enter tokens separated by spaces. Number buttons auto-insert spaces.
+      </div>
+    </div>
+    <div class="menu-section">
+      <strong>Color:</strong><br>
+      <span class="color-box" style="background:#a8e6cf" onclick="setTheme('#a8e6cf')"></span>
+      <span class="color-box" style="background:#e6a75a" onclick="setTheme('#e6a75a')"></span>
+      <span class="color-box" style="background:#ffd54f" onclick="setTheme('#ffd54f')"></span>
+      <span class="color-box" style="background:#f8bbd0" onclick="setTheme('#f8bbd0')"></span>
+      <span class="color-box" style="background:#b0bec5" onclick="setTheme('#b0bec5')"></span>
+    </div>
+    <button class="menu-btn" onclick="applyMenu()">DONE</button>
+  </div>
+  
+  <div id="extrasModal" class="extras-modal" role="dialog" aria-modal="true">
+    <h3>Extras</h3>
+    <div class="tab-buttons">
+      <button onclick="showTab('base')">Base</button>
+      <button onclick="showTab('units')">Units</button>
+      <button onclick="showTab('const')">Const</button>
+      <button class="active" onclick="showTab('solve')">Solve</button>
+      <button onclick="showInfo()">i</button>
+    </div>
+    <div id="baseTab" class="tab-content">
+      <div class="conversion-section">
+        <label>DEC: <input type="text" id="decInput" oninput="convertBase()"></label>
+        <label>OCT: <input type="text" id="octInput" readonly></label>
+        <label>HEX: <input type="text" id="hexInput" readonly></label>
+        <label>BIN: <input type="text" id="binInput" readonly></label>
+        <label>Decimal to Fraction: <input type="text" id="fracInput" oninput="convertToFraction()"></label>
+        <input type="text" id="fracOutput" readonly placeholder="Fraction Result">
+      </div>
+      <button class="clear-btn" onclick="clearBase()">CLEAR ALL</button>
+    </div>
+    <div id="unitsTab" class="tab-content active">
+      <div class="conversion-section">
+        <label>Unit Conversion:
+          <select id="unitCategory" onchange="updateUnitOptions()">
+            <option value="length">Length</option>
+            <option value="temperature">Temperature</option>
+            <option value="energy">Energy</option>
+            <option value="light">Light (Illuminance)</option>
+            <option value="mass">Mass</option>
+            <option value="force">Force</option>
+            <option value="time">Time</option>
+            <option value="speed">Speed</option>
+            <option value="area">Area</option>
+            <option value="power">Power</option>
+            <option value="volume">Volume</option>
+            <option value="pressure">Pressure</option>
+          </select>
+        </label>
+        <label>
+          <select id="unitFrom" onchange="convertUnit()"></select>
+          <input type="number" id="unitValue" oninput="convertUnit()" step="any">
+          <select id="unitTo" onchange="convertUnit()"></select>
+          <input type="text" id="unitResult" readonly>
+        </label>
+      </div>
+    </div>
+    <div id="constTab" class="tab-content">
+      <div class="conversion-section">
+        <label>Bohr Radius (Rb): <span id="Rb">5.29177e-11 m</span></label>
+        <label>Molar Gas Constant (Rc): <span id="Rc">8.314 J/(mol·K)</span></label>
+        <label>Rydberg Constant (Rdb): <span id="Rdb">1.09737e7 m⁻¹</span></label>
+        <label>Molar Volume (Vm): <span id="Vm">22.414 L/mol</span></label>
+        <label>Permittivity of a Vacuum (ε0): <span id="ε0">8.85419e-12 F/m</span></label>
+        <label>Stefan-Boltzmann Constant (σ): <span id="σ">5.67037e-8 W/(m²·K⁴)</span></label>
+        <label>Magnetic Flux Quantum (φ): <span id="φ">2.06783e-15 Wb</span></label>
+        <label>Permeability of a Vacuum (μ0): <span id="μ0">1.25664e-6 H/m</span></label>
+        <label>Bohr Magneton (μb): <span id="μb">9.27401e-24 J/T</span></label>
+        <label>Josephson Constant (Kj): <span id="Kj">4.83598e14 Hz/V</span></label>
+        <label>Impedance of Vacuum (Z0): <span id="Z0">376.73 Ω</span></label>
+        <label>Conductance Quantum (G0): <span id="G0">7.74809e-5 S</span></label>
+        <label>Speed of Light (c): <span id="c">299792458 m/s</span></label>
+        <label>Coulomb Constant (Cc): <span id="Cc">8.98755e9 N·m²/C²</span></label>
+        <label>Acceleration of Gravity (g): <span id="g">9.81 m/s²</span></label>
+        <label>Gravitational Constant (G): <span id="G">6.67430e-11 m³/(kg·s²)</span></label>
+        <label>Planck's Constant (h): <span id="h">6.62607e-34 J·s</span></label>
+        <label>Boltzmann's Constant (k): <span id="k">1.38065e-23 J/K</span></label>
+        <label>Faraday Constant (F): <span id="F">96485 C/mol</span></label>
+        <label>Electron Rest Mass (Me): <span id="Me">9.10938e-31 kg</span></label>
+        <label>Neutron Rest Mass (Mn): <span id="Mn">1.67493e-27 kg</span></label>
+        <label>Proton Rest Mass (Mp): <span id="Mp">1.67262e-27 kg</span></label>
+        <label>Avogadro's Number (Na): <span id="Na">6.02214e23 mol⁻¹</span></label>
+        <label>Electron Charge (q): <span id="q">1.60218e-19 C</span></label>
+      </div>
+    </div>
+    <div id="solveTab" class="tab-content">
+      <div class="conversion-section">
+        <strong>Linear Equation Solver</strong><br>
+        <button onclick="loadSolver('linear',2)">2 x 2</button><br>
+        <button onclick="loadSolver('linear',3)">3 x 3</button><br>
+        <button onclick="loadSolver('linear',4)">4 x 4</button><br>
+        <button onclick="loadSolver('linear',5)">5 x 5</button><br>
+        <strong>Polynomial Root Solver</strong><br>
+        <button onclick="loadSolver('poly',1)">Linear(x)</button><br>
+        <button onclick="loadSolver('poly',2)">Quadratic(x²)</button><br>
+        <button onclick="loadSolver('poly',3)">Cubic(x³)</button><br>
+        <button onclick="loadSolver('poly',4)">Quartic(x⁴)</button><br>
+        <button onclick="loadSolver('poly',5)">Quintic(x⁵)</button><br>
+        <button onclick="loadSolver('poly',6)">Hexic(x⁶)</button><br>
+      </div>
+      <div id="solverForm" style="margin-top: 10px;"></div>
+    </div>
+    <button class="clear-btn" onclick="clearExtras()">Back</button>
+  </div>
+  <footer style="margin-top:18px">
+    Designed & Developed by Susovan Hati © 2025
+  </footer>
+  <div id="history" style="max-width:360px;margin:0 auto;color:white;text-align:right;font-size:0.9rem;line-height:1.4em;padding:8px;background:rgba(0,0,0,0.3);border-radius:8px;">
+    <strong>History</strong><br>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
